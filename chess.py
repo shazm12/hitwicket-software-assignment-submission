@@ -1,9 +1,12 @@
+# Written By: Shamik Bera
+# Date : 2019-10-19
+# Code for Chess game
 import time 
 import sys
-
+# Board is a 5x5 matrix
 board = [['-' for i in range(5)] for i in range(5)]
 
-
+# class for Pawn Piece
 class Pawn:
     def __init__(self,id,team,pos, type, killable=False):
         self.id = id
@@ -12,6 +15,7 @@ class Pawn:
         self.killable = killable
         self.pos = pos
     
+    # Function to check if the move is valid or not
     def valid_move(self,move):
         if(move=='F'):
             if self.team== 'A' and self.pos[0] -1>= 0:
@@ -41,24 +45,27 @@ class Pawn:
                 return True
             else:
                 return False
-        
+ 
+# Function to print the board        
 def print_board():
     for i in range(5):
         for j in range(5):
             print(board[i][j], end=' ')
         print()
 
-
+# Function to intialize the player 1
 def intializeP1(*args):
     for i in range(len(args)):
         board[4][i] = 'A-P'+args[i].id
         args[i].pos = [4,i]    
-
+        
+# Function to intialize the player 2
 def intializeP2(*args):
     for i in range(len(args)):
         board[0][i] = 'B-P'+args[i].id
-        args[i].pos = [0,i]  
-
+        args[i].pos = [0,i] 
+         
+# Function to make move for player 1
 def make_move_1(move,obj,*obj2):
     if(obj.valid_move(move)):
         if(move=='F'):
@@ -111,6 +118,7 @@ def make_move_1(move,obj,*obj2):
         print("Invalid Move")
         sys.exit(0)
  
+# Function to make move for player 2 
 def make_move_2(move,obj,*obj1):
     if(obj.valid_move(move)):
         if(move=='F'):
@@ -161,6 +169,7 @@ def make_move_2(move,obj,*obj1):
         print("Invalid Move")
         sys.exit(0)
  
+# Driver code
 if __name__ == "__main__":
     print_board()
     p1 =  [item for item in  input("Enter Pieces for Player 1: ").split(",")]
@@ -187,6 +196,7 @@ if __name__ == "__main__":
         index2 = p2Obj.index(obj2)
         make_move_2(p2move[1],p2Obj[index2],p1Obj)
         print_board()
+        # Check if any player has won by checking length of the player''s pawn pieces object list
         if(len(p1Obj) == 0):
             print("Player 2 wins")
             break
